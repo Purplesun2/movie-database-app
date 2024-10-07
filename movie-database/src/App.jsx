@@ -5,21 +5,22 @@ import axios from "axios";
 import SearchBar from "./components/SearchBar";
 import MovieList from "./components/MovieList";
 import MovieDetails from "./components/MovieDetails";
+import Footer from "./components/Footer"; 
 import videoSrc from './app.mp4';
 
 function App() {
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [selectedMovie, setSelectedMovie] = useState(null);  
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [kDramaMovies, setKDramaMovies] = useState([]);
   const [series, setSeries] = useState([]);
+  const [searchActive, setSearchActive] = useState(false); 
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   const API_KEY = "cb9c389a";
 
-  // Fetch Movies based on search query
   const fetchMovies = async (query) => {
     setLoading(true);
     setError(null);
@@ -33,25 +34,27 @@ function App() {
         });
         const movieDetails = await Promise.all(movieDetailsPromises);
         setMovies(movieDetails);
+        setSearchActive(true); 
       } else {
         setError("No movies found. Please try another search.");
         setMovies([]);
+        setSearchActive(false); 
       }
     } catch (err) {
       setError("Error fetching data. Please check your internet connection.");
       setMovies([]);
+      setSearchActive(false); 
     }
     setLoading(false);
   };
 
-  // Fetch Details for selected movie
   const fetchMovieDetails = async (id) => {
     setLoading(true);
     setError(null);
     try {
       const response = await axios.get(`https://www.omdbapi.com/?apikey=${API_KEY}&i=${id}`);
       if (response.data.Response === "True") {
-        setSelectedMovie(response.data);
+        setSelectedMovie(response.data); 
       } else {
         setError("Movie details not found.");
       }
@@ -61,7 +64,6 @@ function App() {
     setLoading(false);
   };
 
-  // Fetch Trending Movies
   const fetchTrendingMovies = async () => {
     setLoading(true);
     setError(null);
@@ -83,7 +85,6 @@ function App() {
     setLoading(false);
   };
 
-  // Fetch K-Drama Movies
   const fetchKDramaMovies = async () => {
     setLoading(true);
     setError(null);
@@ -105,7 +106,6 @@ function App() {
     setLoading(false);
   };
 
-  // Fetch Series
   const fetchSeries = async () => {
     setLoading(true);
     setError(null);
@@ -165,7 +165,10 @@ function App() {
       </div>
 
       <div>
-        <img src={logo} alt="MovieMania Logo" className="logo" />
+        {/* Wrap the logo in a clickable link */}
+        <a href="/">
+          <img src={logo} alt="MovieMania Logo" className="logo" />
+        </a>
 
         <nav className="navbar">
           <ul className="nav-links">
@@ -182,50 +185,58 @@ function App() {
           <SearchBar onSearch={fetchMovies} />
         </div>
 
-        <div className="trending-section">
-          <h2 className="section-title">Trending Movies</h2>
-          {loading && <p>Loading trending movies...</p>}
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-          {!loading && trendingMovies.length > 0 && (
-            <MovieList movies={trendingMovies} onMovieClick={fetchMovieDetails} />
-          )}
-        </div>
+        {!searchActive && (
+          <>
+            <div className="trending-section">
+              <h2 className="section-title">Trending Movies</h2>
+              {loading && trendingMovies.length === 0 && <p>Loading trending movies...</p>}
+              {error && <p style={{ color: 'red' }}>{error}</p>}
+              {!loading && trendingMovies.length > 0 && (
+                <MovieList movies={trendingMovies} onMovieClick={fetchMovieDetails} />
+              )}
+            </div>
 
-        <div className="kdrama-section">
-          <h2 className="section-title">K-Drama Movies</h2>
-          {loading && <p>Loading K-Drama movies...</p>}
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-          {!loading && kDramaMovies.length > 0 && (
-            <MovieList movies={kDramaMovies} onMovieClick={fetchMovieDetails} />
-          )}
-        </div>
+            <div className="kdrama-section">
+              <h2 className="section-title">K-Drama Movies</h2>
+              {loading && kDramaMovies.length === 0 && <p>Loading K-Drama movies...</p>}
+              {error && <p style={{ color: 'red' }}>{error}</p>}
+              {!loading && kDramaMovies.length > 0 && (
+                <MovieList movies={kDramaMovies} onMovieClick={fetchMovieDetails} />
+              )}
+            </div>
 
-        <div className="series-section">
-          <h2 className="section-title">Series</h2>
-          {loading && <p>Loading series...</p>}
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-          {!loading && series.length > 0 && (
-            <MovieList movies={series} onMovieClick={fetchMovieDetails} />
-          )}
-        </div>
+            <div className="series-section">
+              <h2 className="section-title">Series</h2>
+              {loading && series.length === 0 && <p>Loading series...</p>}
+              {error && <p style={{ color: 'red' }}>{error}</p>}
+              {!loading && series.length > 0 && (
+                <MovieList movies={series} onMovieClick={fetchMovieDetails} />
+              )}
+            </div>
+          </>
+        )}
 
-        {loading && <p>Loading...</p>}
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        {!selectedMovie && !loading && <MovieList movies={movies} onMovieClick={fetchMovieDetails} />}
-        {selectedMovie && !loading && <MovieDetails movie={selectedMovie} />}
+        {searchActive && (
+          <div className="search-results-section">
+            <h2 className="section-title">Search Results</h2>
+            {loading && <p>Loading search results...</p>}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {!loading && movies.length > 0 && (
+              <MovieList movies={movies} onMovieClick={fetchMovieDetails} />
+            )}
+          </div>
+        )}
+
+        {selectedMovie && (
+          <MovieDetails movie={selectedMovie} />
+        )}
+
+        {showBackToTop && (
+          <button className="back-to-top" onClick={scrollToTop}>Back to Top</button>
+        )}
+
+        <Footer />
       </div>
-
-      <footer className="footer">
-        <div className="footer-content">
-          <p>&copy; 2024 MovieMania. All rights reserved.</p>
-        </div>
-      </footer>
-
-      {showBackToTop && (
-        <button className="back-to-top" onClick={scrollToTop}>
-          Back to Top
-        </button>
-      )}
     </div>
   );
 }

@@ -6,7 +6,7 @@ const renderStars = (rating) => {
   const totalStars = 5; // Display 5 stars max
   const filledStars = Math.round((rating / 10) * totalStars); // Convert 10-point rating to 5-point
   const emptyStars = totalStars - filledStars;
-  
+
   return (
     <>
       {"★".repeat(filledStars)}{"☆".repeat(emptyStars)}
@@ -42,12 +42,10 @@ function MovieList({ movies, onMovieClick }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
       {movies.map((movie) => (
-        <a 
+        <div 
           key={movie.imdbID} 
-          href={`https://www.imdb.com/title/${movie.imdbID}`}  // IMDb link
-          target="_blank"  // Opens in a new tab
-          rel="noopener noreferrer"  // Security measure for opening in a new tab
-          className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 bg-gray-800"
+          onClick={() => onMovieClick(movie.imdbID)}  // Call the function to fetch and display movie details
+          className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 bg-gray-800 cursor-pointer" // Added cursor-pointer for clickability
         >
           <img src={movie.Poster} alt={movie.Title} className="movie-thumbnail" />
           <div className="p-4">
@@ -60,7 +58,7 @@ function MovieList({ movies, onMovieClick }) {
               </p>
             )}
           </div>
-        </a>
+        </div>
       ))}
     </div>
   );
