@@ -18,7 +18,7 @@ function SearchBar({ onSearch }) {
         onChange={(e) => setSearchTerm(e.target.value)}
         className="border border-gray-300 rounded-l px-4 py-2 w-1/2"
       />
-      <button type="submit" className="bg-blue-500 text-white rounded-r px-4 py-2 hover:bg-blue-600 transition duration-300">
+      <button type="submit" className="search-button">
         Search
       </button>
     </form>

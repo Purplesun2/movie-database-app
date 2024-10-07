@@ -9,7 +9,7 @@ function MovieDetails({ movie }) {
       <p><strong>Plot:</strong> {movie.Plot}</p>
       <p><strong>Director:</strong> {movie.Director}</p>
       <p><strong>Actors:</strong> {movie.Actors}</p>
-      <button onClick={() => window.location.reload()}>Go Back</button> {/* Reload to go back */}
+      <button onClick={() => window.location.reload()}>Go Back</button>
     </div>
   );
 }
