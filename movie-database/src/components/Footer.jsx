@@ -3,7 +3,7 @@ import React from 'react';
 function Footer() {
   return (
     <footer className="footer">
-      {/* Button hover effect */}
+      {/* footer content */}
       <p>&copy; 2024 MovieMania. All rights reserved.</p> 
     </footer>
   );
