@@ -165,7 +165,7 @@ function App() {
       </div>
 
       <div>
-        {/* Wrap the logo in a clickable link */}
+        {/* Wrap the LOGO in a clickable link */}
         <a href="/">
           <img src={logo} alt="MovieMania Logo" className="logo" />
         </a>
