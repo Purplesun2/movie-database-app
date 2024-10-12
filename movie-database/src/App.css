@@ -92,9 +92,21 @@ button.search-button:hover {
 }
 
 .section-title {
-  font-size: 24px;
-  margin-bottom: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  font-size: 28px;
+  color: #333;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
 }
+
+.section-title:hover {
+  color: #905fcb;
+  cursor: pointer;
+}
+
 
 .movie-item {
   margin-bottom: 15px;
