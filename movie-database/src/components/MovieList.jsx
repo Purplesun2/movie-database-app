@@ -44,7 +44,7 @@ function MovieList({ movies, onMovieClick }) {
       {movies.map((movie) => (
         <div 
           key={movie.imdbID} 
-          onClick={() => onMovieClick(movie.imdbID)}  // Call the function to fetch and display movie details
+          onClick={() => window.open(`https://www.imdb.com/title/${movie.imdbID}`, "_blank")} //open on the imbd website//
           className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 bg-gray-800 cursor-pointer" // Added cursor-pointer for clickability
         >
           <img src={movie.Poster} alt={movie.Title} className="movie-thumbnail" />
