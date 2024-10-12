@@ -47,7 +47,14 @@ function MovieList({ movies, onMovieClick }) {
           onClick={() => window.open(`https://www.imdb.com/title/${movie.imdbID}`, "_blank")} //open on the imbd website//
           className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 bg-gray-800 cursor-pointer" // Added cursor-pointer for clickability
         >
-          <img src={movie.Poster} alt={movie.Title} className="movie-thumbnail" />
+          <img 
+           src={movie.Poster !== "N/A" ? movie.Poster : "kdrama.jpg"} 
+            alt={movie.Title} 
+             className="w-full h-64 object-cover" 
+             onError={(e) => { e.target.src = "kdrama.jpg"; }} 
+/>
+
+
           <div className="p-4">
             <h2 className="movie-title text-yellow-300 text-center">{movie.Title}</h2> {/* Centered */}
             <p className="movie-year text-white text-center">Release Year: {movie.Year}</p> {/* Centered */}
