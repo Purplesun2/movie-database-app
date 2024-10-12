@@ -185,8 +185,8 @@ function App() {
           <SearchBar onSearch={fetchMovies} />
         </div>
 
-        {!searchActive && (
-          <>
+        {!searchActive && !loading && (
+  <>
             <div className="trending-section">
               <h2 className="section-title">Trending Movies</h2>
               {loading && trendingMovies.length === 0 && <p>Loading trending movies...</p>}
