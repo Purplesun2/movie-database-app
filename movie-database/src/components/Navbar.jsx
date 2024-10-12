@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 function Navbar() {
   return (
     <nav>
+      {/*wrapping failed */}
       <ul>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/trending">Trending</Link></li>
