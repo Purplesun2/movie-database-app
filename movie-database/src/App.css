@@ -13,7 +13,7 @@ body, html {
 
 .logo {
   margin: 20px auto;
-  width: 150px;
+  width: 190px;
   display: block;
 }
 
@@ -28,6 +28,11 @@ body, html {
   list-style: none;
   padding: 0;
 }
+.nav-item:hover {
+  color: #2bd30d;
+  cursor: pointer;
+}
+
 
 .nav-item {
   font-weight: bold;
